@@ -1,4 +1,4 @@
-PassJava 项目全套学习教程连载中，[关注公众号](#公众号)第一时间获取。
+PassJava 项目全套学习教程连载中，[关注公众号](#公众号)第一时间获取。6
 
 可落地的 Spring Cloud项目：`PassJava` https://github.com/Jackson0714/PassJava-Platform
 
