@@ -21,6 +21,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.springframework.retry</groupId>
+            <artifactId>spring-retry</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.jackson0714.passjava</groupId>
             <artifactId>passjava-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
@@ -44,6 +48,12 @@
                     <artifactId>junit-vintage-engine</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.jackson0714.passjava</groupId>
+            <artifactId>passjava-jwt</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

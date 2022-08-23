@@ -2,6 +2,9 @@ package com.jackson0714.passjava.question.controller;
 
 import java.util.*;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -14,12 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jackson0714.passjava.question.entity.QuestionEntity;
 import com.jackson0714.passjava.question.service.IQuestionService;
-import com.jackson0714.common.utils.PageUtils;
-import com.jackson0714.common.utils.R;
+import com.jackson0714.passjava.common.utils.PageUtils;
+import com.jackson0714.passjava.common.utils.R;
 
 import javax.validation.Valid;
-
-import static org.apache.tomcat.jni.Lock.lock;
 
 
 /**
@@ -31,7 +32,7 @@ import static org.apache.tomcat.jni.Lock.lock;
  */
 @RestController
 @RequestMapping("question/v1/admin/question")
-
+@Slf4j
 public class QuestionController {
     @Autowired
     private IQuestionService IQuestionService;
@@ -41,11 +42,12 @@ public class QuestionController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("question:question:list")
-    public R list(@RequestParam Map<String, Object> params){
+    public R list(Page<QuestionEntity> page, @RequestParam Map<String, Object> params){
         long time = System.currentTimeMillis();
-        PageUtils page = IQuestionService.queryPage(params);
+        Page<QuestionEntity> page1 = (Page<QuestionEntity>) IQuestionService.queryPage1(page, params);
+
         System.out.println("耗时："+ (System.currentTimeMillis() - time));
-        return R.ok().put("page", page);
+        return R.ok().put("page", page1);
     }
 
 
@@ -53,7 +55,7 @@ public class QuestionController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    @Cacheable({"hot"})
+//    @Cacheable({"hot"})
     public R info(@PathVariable("id") Long id) {
 		QuestionEntity question = IQuestionService.info(id);
         return R.ok().put("question", question);
@@ -106,10 +108,10 @@ public class QuestionController {
     }
 
     @RequestMapping("/create")
-    @CachePut(value = "hot", key = "#result.id")
     // mock create
-    public QuestionEntity create(@Valid @RequestBody QuestionEntity question){
-        return IQuestionService.createQuestion(question);
+    public R create(@Valid @RequestBody QuestionEntity question){
+        IQuestionService.createQuestion(question);
+        return R.ok();
     }
 
     @RequestMapping("/remove/{id}")

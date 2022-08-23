@@ -1,7 +1,6 @@
 package com.jackson0714.passjava.question.controller;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jackson0714.passjava.question.entity.TypeEntity;
 import com.jackson0714.passjava.question.service.ITypeService;
-import com.jackson0714.common.utils.PageUtils;
-import com.jackson0714.common.utils.R;
+import com.jackson0714.passjava.common.utils.PageUtils;
+import com.jackson0714.passjava.common.utils.R;
 
 
 

@@ -1,10 +1,9 @@
 package com.jackson0714.passjava.question.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.jackson0714.common.utils.PageUtils;
-import com.jackson0714.common.utils.R;
+import com.jackson0714.passjava.common.utils.PageUtils;
 import com.jackson0714.passjava.question.entity.QuestionEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Map;
 
@@ -17,6 +16,8 @@ import java.util.Map;
  */
 public interface IQuestionService extends IService<QuestionEntity> {
 
+    IPage<QuestionEntity> queryPage1(IPage<QuestionEntity> page, Map<String, Object> params);
+
     PageUtils queryPage(Map<String, Object> params);
 
     QuestionEntity info(Long id);
@@ -25,6 +26,6 @@ public interface IQuestionService extends IService<QuestionEntity> {
 
     boolean updateQuestion(QuestionEntity question);
 
-    QuestionEntity createQuestion(QuestionEntity question);
+    boolean createQuestion(QuestionEntity question);
 }
 

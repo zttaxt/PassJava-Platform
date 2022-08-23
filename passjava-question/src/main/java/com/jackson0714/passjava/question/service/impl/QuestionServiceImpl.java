@@ -1,8 +1,7 @@
 package com.jackson0714.passjava.question.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
-import com.jackson0714.common.to.es.QuestionEsModel;
-import com.jackson0714.common.utils.R;
+import com.jackson0714.passjava.common.to.es.QuestionEsModel;
+import com.jackson0714.passjava.common.utils.R;
 import com.jackson0714.passjava.question.entity.TypeEntity;
 import com.jackson0714.passjava.question.feign.SearchFeignService;
 import com.jackson0714.passjava.question.service.ITypeService;
@@ -15,8 +14,8 @@ import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.jackson0714.common.utils.PageUtils;
-import com.jackson0714.common.utils.Query;
+import com.jackson0714.passjava.common.utils.PageUtils;
+import com.jackson0714.passjava.common.utils.Query;
 
 import com.jackson0714.passjava.question.dao.QuestionDao;
 import com.jackson0714.passjava.question.entity.QuestionEntity;
@@ -31,6 +30,11 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionDao, QuestionEntity
 
     @Autowired
     SearchFeignService searchFeignService;
+
+    @Override
+    public  IPage<QuestionEntity> queryPage1(IPage<QuestionEntity> page, Map<String, Object> params) {
+        return baseMapper.selectPage1(page, params);
+    }
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -54,7 +58,7 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionDao, QuestionEntity
     }
 
     @Override
-    @Cacheable({"question", "hot"})
+//    @Cacheable({"question", "hot"})
     public QuestionEntity info(Long id) {
         return getById(id);
     }
@@ -76,10 +80,11 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionDao, QuestionEntity
     }
 
     @Override
-    public QuestionEntity createQuestion(QuestionEntity question) {
+    public boolean createQuestion(QuestionEntity question) {
+        boolean saveResult = save(question);
         // Mock 返回 id
-        question.setId(123L);
-        return question;
+        // question.setId(123L);
+        return saveResult;
     }
 
     private boolean saveEs(QuestionEntity question) {
